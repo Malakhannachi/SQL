@@ -1,6 +1,8 @@
 ======================1
-SELECT * 
+SELECT *, categorie.type_recette
 FROM recipe
+INNER JOIN categorie ON categorie.id_categorie = recipe.id_categorie
+ORDER BY temps_preparation DESC 
 =========================1
 
 ==========>2
@@ -17,9 +19,9 @@ WHERE temps_preparation >= 30;
 ===========>Q3
 
 =========>4
-SELECT * 
+SELECT *
 FROM recipe 
-WHERE nom = "salade";
+WHERE nom LIKE 'salade%'
 ========>4 
 
 ========5 
@@ -38,10 +40,11 @@ WHERE id_recette = 2
 ======================7
 
 =======================8
-SELECT prix_ingredient
-FROM ingredient
-INNER JOIN recipe ON id_ingredient = id_recette
-WHERE id_recette = 5
+SELECT SUM( quantite*prix_ingredient)
+FROM preparer
+INNER JOIN recipe ON preparer.id_recette = recipe.id_recette 
+INNER JOIN ingredient ON preparer.id_ingredient = ingredient.id_ingredient
+WHERE recipe.id_recette = 5
 ====================8
 
 ======================9
@@ -91,8 +94,9 @@ WHERE prix_ingredient > 2
 =======================15
 
 ========================16
-SELECT MIN(temps_preparation)
+SELECT recipe.nom, MIN(temps_preparation)
 FROM recipe
+GROUP BY recipe.id_recette
 ==========================16	
 
 ==========================17
