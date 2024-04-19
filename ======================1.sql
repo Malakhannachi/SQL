@@ -94,9 +94,10 @@ WHERE prix_ingredient > 2
 =======================15
 
 ========================16
-SELECT recipe.nom, MIN(temps_preparation)
+SELECT recipe.nom, temps_preparation
 FROM recipe
 GROUP BY recipe.id_recette
+HAVING temps_preparation = (SELECT MIN(temps_preparation) FROM recipe)
 ==========================16	
 
 ==========================17
